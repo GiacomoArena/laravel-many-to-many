@@ -13,9 +13,24 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::dropIfExists('portfolio_technology');
         Schema::create('portfolio_technology', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
+
+            $table->unsignedBigInteger('portfolio_id');
+
+            $table->foreign('portfolio_id')
+                            ->references('id')
+                            ->on('portfolios')
+                            ->cascadeOnDelete();
+
+
+            $table->unsignedBigInteger('technology_id');
+
+            $table->foreign('technology_id')
+                            ->references('id')
+                            ->on('technologies')
+                            ->cascadeOnDelete();
+
         });
     }
 
