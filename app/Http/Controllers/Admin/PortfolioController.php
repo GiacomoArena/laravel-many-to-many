@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 use App\Models\Portfolio;
+use App\Models\Technology;
 use App\Models\Type;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -28,8 +29,9 @@ class PortfolioController extends Controller
      */
     public function create()
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.portfolio.create', compact('types'));
+        return view('admin.portfolio.create', compact('types','technologies'));
     }
 
     /**
@@ -40,6 +42,8 @@ class PortfolioController extends Controller
      */
     public function store(PortfolioRequest $request)
     {
+
+
         $form_data = $request->all();
         $form_data['slug'] = Portfolio::generateSlug($form_data['title']);
 
@@ -51,6 +55,10 @@ class PortfolioController extends Controller
         $new_portfolio = new Portfolio();
         $new_portfolio->fill($form_data);
         $new_portfolio->save();
+
+        if(array_key_exists('technologies', $form_data)){
+            $new_portfolio->technologies()->attach($form_data['technologies']);
+        }
 
         return redirect()->route('admin.portfolios.show', $new_portfolio);
     }
@@ -74,8 +82,9 @@ class PortfolioController extends Controller
      */
     public function edit(Portfolio $portfolio)
     {
+        $technologies = Technology::all();
         $types = Type::all();
-        return view('admin.portfolio.edit', compact('portfolio','types'));
+        return view('admin.portfolio.edit', compact('portfolio','types','technologies'));
     }
 
     /**
@@ -104,8 +113,13 @@ class PortfolioController extends Controller
             $form_data['image_path'] = Storage::put('uploads/', $form_data['image']);
 
         };
-
         $portfolio->update($form_data);
+
+        if(array_key_exists('technologies', $form_data)){
+            $portfolio->technologies()->sync($form_data['technologies']);
+        }else{
+            $portfolio->technologies()->detach();
+        }
 
         return redirect()->route('admin.portfolios.show', $portfolio);
     }

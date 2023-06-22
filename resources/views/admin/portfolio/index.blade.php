@@ -22,7 +22,17 @@
                         <td>{{ $portfolio->name }}</td>
                         <td>{{ $portfolio->surname }}</td>
                         <td><span class="badge bg-secondary">{{ $portfolio->type?->type }}</span></td>
-                        <td><span class="badge bg-secondary">{{ $portfolio->technology?->name }}</span></td>
+                        <td>
+                            @forelse ( $portfolio->technologies as $tech)
+                            <span class="badge bg-secondary">
+                                {{$tech->name}}
+                            </span>
+                            @empty
+                            <span class="badge bg-secondary">
+                                empty
+                            </span>
+                            @endforelse
+                        </td>
                         <td>
                             <a href="{{ route('admin.portfolios.show', $portfolio) }}" class="btn btn-dark"><i
                                     class="fa-solid fa-eye"></i></a>
