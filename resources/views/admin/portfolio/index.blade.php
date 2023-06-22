@@ -11,6 +11,7 @@
                     <th scope="col">Name</th>
                     <th scope="col">Surname</th>
                     <th scope="col">Type</th>
+                    <th scope="col">Technology</th>
                     <th scope="col"> </th>
                 </tr>
             </thead>
@@ -21,6 +22,7 @@
                         <td>{{ $portfolio->name }}</td>
                         <td>{{ $portfolio->surname }}</td>
                         <td><span class="badge bg-secondary">{{ $portfolio->type?->type }}</span></td>
+                        <td><span class="badge bg-secondary">{{ $portfolio->technology?->name }}</span></td>
                         <td>
                             <a href="{{ route('admin.portfolios.show', $portfolio) }}" class="btn btn-dark"><i
                                     class="fa-solid fa-eye"></i></a>

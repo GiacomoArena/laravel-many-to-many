@@ -28,9 +28,7 @@ class Portfolio extends Model
     }
 
     public function technologies(){
-
         return $this->belongsToMany(Technology::class);
-
     }
 
     public static function generateSlug($str){
