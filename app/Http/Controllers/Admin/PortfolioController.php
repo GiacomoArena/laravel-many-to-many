@@ -96,8 +96,7 @@ class PortfolioController extends Controller
      */
     public function update(PortfolioRequest $request, Portfolio $portfolio)
     {
-       // dd($request->file('image'));
-    $form_data = $request->all();
+        $form_data = $request->all();
 
         if($form_data['title'] !== $portfolio->title){
             $form_data['slug'] = Portfolio::generateSlug($form_data['title']);
@@ -113,8 +112,10 @@ class PortfolioController extends Controller
             $form_data['image_path'] = Storage::put('uploads/', $form_data['image']);
 
         };
+
         $portfolio->update($form_data);
 
+        //dd($portfolio);
         if(array_key_exists('technologies', $form_data)){
             $portfolio->technologies()->sync($form_data['technologies']);
         }else{

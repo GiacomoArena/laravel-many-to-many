@@ -30,19 +30,22 @@
         <div class="mb-3">
             <label for="type_id" class="form-label">Type</label>
             <select class="form-select" name="type_id">
-                <option selected>Select Type</option>
+
                 @foreach ($types as $type)
-                <option value="{{$type->id}}">{{$type->type}}</option>
+                    <option value="{{ $type->id }}">{{ $type->type }}</option>
                 @endforeach
             </select>
         </div>
 
         <div class="btn-group" role="group" aria-label="Basic checkbox toggle button group">
             @foreach ($technologies as $tech)
-            <input type="checkbox" class="btn-check" id="{{$tech->id}}" autocomplete="off" name="technologies[]" value="{{$tech->id}}">
-            <label class="btn btn-outline-primary" for="{{$tech->id}}">{{$tech->name}}</label>
+                {{-- @if ($tech->name !== 'Select Type') --}}
+                    <input type="checkbox" class="btn-check" id="{{$tech->id}}" autocomplete="off" name="technologies[]" value="{{$tech->id}}">
+                    <label class="btn btn-outline-primary" for="{{$tech->id}}">{{$tech->name}}</label>
+                {{-- @endif --}}
             @endforeach
         </div>
+
 
         <div class="mb-3">
             <label for="name" class="form-label">Name</label>
